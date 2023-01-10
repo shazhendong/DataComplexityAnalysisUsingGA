@@ -5,6 +5,8 @@
 dir_scr=scr
 dir_res=res
 
+para_env='source $HOME/.local/ENV/bin/activate'
+
 #### Prepare genetic algrithms scr ####
 echo "Prepare genetic algrithms scr"
 
@@ -22,3 +24,62 @@ for folder in $dir_res/GEO_Datasets/*
 do
     cp -r $dir_scr/GeneticAlgorithm/*.py $folder
 done
+
+#### Prepare HPC scr ####
+echo "#### Prepare HPC scr ####"
+rm -r $dir_res/GWAS/res_*.sh
+# process GWAS runs
+
+echo "Process GWAS runs"
+
+para_genNum=100 # number of generations
+para_popSize=1000 # size of the population
+para_mutRate=0.2 # mutation rate
+para_crossRate=0.8 # crossover rate
+para_tournSize=6 # tournament size
+para_sizelimit_begin=10 # begin size limit
+para_sizelimit_end=200 # end size limit (inclusive)
+para_step=10 # step size
+
+para_arrSize=30 # size of the sbatch array
+para_hrs=120 # number of hours for each sbatch job
+para_core=1 # number of cores for each sbatch job
+para_mem=4 # memory for each sbatch job (GB)
+para_repeatNum=5 # number of repeats of each sbatch job
+
+# produce ga runs with LR as the fitness evaluation
+data="CRC"
+filter="LR"
+for (( c=$para_sizelimit_begin; c<=$para_sizelimit_end; c=$c+$para_step ))
+do
+	echo "#!/bin/sh" > res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "#SBATCH --array=1-$para_arrSize" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "#SBATCH --job-name=${data}_${filter}_$c" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "#SBATCH --time=$para_hrs:00:00" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "#SBATCH -c $para_core" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "#SBATCH --mem ${para_mem}g" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "$para_env" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "python GeneticAlgorithm_eaSimple_LogisticRegression.py -b train -m $para_mutRate -c $para_crossRate -t $para_tournSize -p $para_popSize -s $c -g $para_genNum -r $para_repeatNum > res_simpleGAplusLR_sizelim_${c}_\$SLURM_ARRAY_TASK_ID.txt" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+done
+
+para_hrs=96 # number of hours for each sbatch job
+
+data="CRC"
+filter="DT"
+for (( c=$para_sizelimit_begin; c<=$para_sizelimit_end; c=$c+$para_step ))
+do
+	echo "#!/bin/sh" > res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "#SBATCH --array=1-$para_arrSize" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "#SBATCH --job-name=${data}_${filter}_$c" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "#SBATCH --time=$para_hrs:00:00" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "#SBATCH -c $para_core" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "#SBATCH --mem ${para_mem}g" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "$para_env" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+    echo "python GeneticAlgorithm_eaSimple_DecisionTree_withFeatureReduction.py -b train -m $para_mutRate -c $para_crossRate -t $para_tournSize -p $para_popSize -s $c -g $para_genNum -r $para_repeatNum > res_simpleGAplusLR_sizelim_${c}_\$SLURM_ARRAY_TASK_ID.txt" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+done
+
+mv res_simpleGAplus* $dir_res/GWAS
