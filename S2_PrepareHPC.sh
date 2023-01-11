@@ -41,8 +41,8 @@ para_sizelimit_begin=10 # begin size limit
 para_sizelimit_end=200 # end size limit (inclusive)
 para_step=10 # step size
 
-para_arrSize=30 # size of the sbatch array
-para_hrs=120 # number of hours for each sbatch job
+para_arrSize=15 # size of the sbatch array
+para_hrs=100 # number of hours for each sbatch job
 para_core=1 # number of cores for each sbatch job
 para_mem=4 # memory for each sbatch job (GB)
 para_repeatNum=5 # number of repeats of each sbatch job
@@ -63,8 +63,6 @@ do
     echo "" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
     echo "python GeneticAlgorithm_eaSimple_LogisticRegression.py -b train -m $para_mutRate -c $para_crossRate -t $para_tournSize -p $para_popSize -s $c -g $para_genNum -r $para_repeatNum > res_simpleGAplusLR_sizelim_${c}_\$SLURM_ARRAY_TASK_ID.txt" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
 done
-
-para_hrs=96 # number of hours for each sbatch job
 
 data="CRC"
 filter="DT"
@@ -99,12 +97,12 @@ para_popSize=1000 # size of the population
 para_mutRate=0.2 # mutation rate
 para_crossRate=0.8 # crossover rate
 para_tournSize=6 # tournament size
-para_sizelimit_begin=10 # begin size limit
-para_sizelimit_end=200 # end size limit (inclusive)
-para_step=10 # step size
+para_sizelimit_begin=5 # begin size limit
+para_sizelimit_end=100 # end size limit (inclusive)
+para_step=5 # step size
 
-para_arrSize=30 # size of the sbatch array
-para_hrs=120 # number of hours for each sbatch job
+para_arrSize=15 # size of the sbatch array
+para_hrs=100 # number of hours for each sbatch job
 para_core=1 # number of cores for each sbatch job
 para_mem=4 # memory for each sbatch job (GB)
 para_repeatNum=5 # number of repeats of each sbatch job
@@ -130,8 +128,6 @@ do
         echo "" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "python GeneticAlgorithm_eaSimple_LogisticRegression.py -f train.tsv -m $para_mutRate -c $para_crossRate -t $para_tournSize -p $para_popSize -s $c -g $para_genNum -r $para_repeatNum > res_simpleGAplusLR_sizelim_${c}_\$SLURM_ARRAY_TASK_ID.txt" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
     done
-
-    para_hrs=96 # number of hours for each sbatch job
 
     data=${name:0:4}
     filter="DT"
@@ -163,7 +159,7 @@ do
 done
 
 para_genNum=100 # number of generations
-para_popSize=50 # size of the population
+para_popSize=100 # size of the population
 para_mutRate=0.2 # mutation rate
 para_crossRate=0.8 # crossover rate
 para_tournSize=6 # tournament size
@@ -171,10 +167,10 @@ para_sizelimit_begin=1 # begin size limit
 para_sizelimit_end=10 # end size limit (inclusive)
 para_step=1 # step size
 
-para_arrSize=30 # size of the sbatch array
-para_hrs=120 # number of hours for each sbatch job
+para_arrSize=15 # size of the sbatch array
+para_hrs=100 # number of hours for each sbatch job
 para_core=1 # number of cores for each sbatch job
-para_mem=4 # memory for each sbatch job (GB)
+para_mem=2 # memory for each sbatch job (GB)
 para_repeatNum=5 # number of repeats of each sbatch job
 
 # iterate through all GEO datasets
@@ -199,7 +195,6 @@ do
         echo "python GeneticAlgorithm_eaSimple_LogisticRegression.py -f train.tsv -m $para_mutRate -c $para_crossRate -t $para_tournSize -p $para_popSize -s $c -g $para_genNum -r $para_repeatNum > res_simpleGAplusLR_sizelim_${c}_\$SLURM_ARRAY_TASK_ID.txt" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
     done
 
-    para_hrs=96 # number of hours for each sbatch job
 
     data="GAMETES"
     filter="DT"
