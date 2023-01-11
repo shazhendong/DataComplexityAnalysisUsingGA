@@ -164,7 +164,7 @@ para_mutRate=0.2 # mutation rate
 para_crossRate=0.8 # crossover rate
 para_tournSize=6 # tournament size
 para_sizelimit_begin=1 # begin size limit
-para_sizelimit_end=10 # end size limit (inclusive)
+para_sizelimit_end=8 # end size limit (inclusive)
 para_step=1 # step size
 
 para_arrSize=15 # size of the sbatch array
