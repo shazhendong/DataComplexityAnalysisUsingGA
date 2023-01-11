@@ -137,7 +137,7 @@ if __name__ == "__main__":
             num_repeat = int(arg)
         elif opt == '-s': # -s represents the maximun number of features
             size = int(arg)
-        elif opt == '-f': # -f represents file name
+        elif opt == '-f': # -f represents file name (tsv)
             file = arg
         elif opt == '-b': # -b represents bfile
             bfile = arg
@@ -146,8 +146,11 @@ if __name__ == "__main__":
     dataset_X = None
     dataset_y = None
     if file != None:
-        dataset = pd.read_csv(file).to_numpy()
-        dataset_X,dataset_y = mytoolbox.return_X_y(dataset, len(dataset[0])-1, fast=True)
+        dataset = pd.read_table(file)
+        # drop last column
+        dataset_X = dataset.drop(dataset.columns[-1], axis=1).to_numpy()
+        # get last column
+        dataset_y = dataset[dataset.columns[-1]].values
     elif bfile != None:
         (bim, fam, bed) = read_plink(bfile,verbose=False)
         dataset_X = bed.compute().T

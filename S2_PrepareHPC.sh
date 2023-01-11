@@ -146,7 +146,7 @@ do
         echo "" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "$para_env" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
-        echo "python GeneticAlgorithm_eaSimple_DecisionTree_withFeatureReduction.py -b train.tsv -m $para_mutRate -c $para_crossRate -t $para_tournSize -p $para_popSize -s $c -g $para_genNum -r $para_repeatNum > res_simpleGAplusLR_sizelim_${c}_\$SLURM_ARRAY_TASK_ID.txt" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+        echo "python GeneticAlgorithm_eaSimple_DecisionTree_withFeatureReduction.py -f train.tsv -m $para_mutRate -c $para_crossRate -t $para_tournSize -p $para_popSize -s $c -g $para_genNum -r $para_repeatNum > res_simpleGAplusLR_sizelim_${c}_\$SLURM_ARRAY_TASK_ID.txt" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
     done
 
     mv res_simpleGAplus* $folder
@@ -214,7 +214,7 @@ do
         echo "" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "$para_env" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
-        echo "python GeneticAlgorithm_eaSimple_DecisionTree_withFeatureReduction.py -b train.tsv -m $para_mutRate -c $para_crossRate -t $para_tournSize -p $para_popSize -s $c -g $para_genNum -r $para_repeatNum > res_simpleGAplusLR_sizelim_${c}_\$SLURM_ARRAY_TASK_ID.txt" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
+        echo "python GeneticAlgorithm_eaSimple_DecisionTree_withFeatureReduction.py -f train.tsv -m $para_mutRate -c $para_crossRate -t $para_tournSize -p $para_popSize -s $c -g $para_genNum -r $para_repeatNum > res_simpleGAplusLR_sizelim_${c}_\$SLURM_ARRAY_TASK_ID.txt" >> res_simpleGAplus"$filter"_sizelim_"$c".sh
     done
 
     mv res_simpleGAplus* $folder

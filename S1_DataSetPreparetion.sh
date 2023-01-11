@@ -84,7 +84,7 @@ do
     mv $file $name
     # goto the folder
     cd $name
-    # rename the file to alldata.tsv
+    # rename the file to alldata.csv
     mv $file alldata.csv
     cd ..
 done
@@ -98,9 +98,10 @@ do
     cd $folder
     # transform the dataset into tsv format
     python $home/scr/DatasetPrep/csv2tsv.py alldata.csv alldata.tsv
-    rm alldata.csv
+    
     # split the dataset into training and validation sets
     python $home/scr/DatasetPrep/split_dataset.py alldata.tsv train.tsv validation.tsv $pct_validation $random_seed
+    rm alldata.csv
     cd $home
 done
 

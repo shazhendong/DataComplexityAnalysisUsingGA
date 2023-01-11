@@ -48,7 +48,7 @@ if __name__ == "__main__":
     df_valid['Labels'] = y_valid
 
     #### write to file ####
-    df_train.to_csv(add_train, index=False) # save dataset
-    df_valid.to_csv(add_valid, index=False) # save dataset
+    df_train.to_csv(add_train, index=False, sep='\t') # save dataset
+    df_valid.to_csv(add_valid, index=False, sep='\t') # save dataset
 
 
