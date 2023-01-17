@@ -42,7 +42,7 @@ para_sizelimit_end=20 # end size limit (inclusive)
 para_step=1 # step size
 
 para_arrSize=15 # size of the sbatch array
-para_hrs=100 # number of hours for each sbatch job
+para_hrs=70 # number of hours for each sbatch job
 para_core=1 # number of cores for each sbatch job
 para_mem=4 # memory for each sbatch job (GB)
 para_repeatNum=5 # number of repeats of each sbatch job
@@ -93,7 +93,7 @@ do
 done
 
 para_genNum=50 # number of generations
-para_popSize=1000 # size of the population
+para_popSize=500 # size of the population
 para_mutRate=0.2 # mutation rate
 para_crossRate=0.8 # crossover rate
 para_tournSize=6 # tournament size
@@ -102,7 +102,7 @@ para_sizelimit_end=20 # end size limit (inclusive)
 para_step=1 # step size
 
 para_arrSize=15 # size of the sbatch array
-para_hrs=100 # number of hours for each sbatch job
+para_hrs=70 # number of hours for each sbatch job
 para_core=1 # number of cores for each sbatch job
 para_mem=4 # memory for each sbatch job (GB)
 para_repeatNum=5 # number of repeats of each sbatch job
@@ -168,7 +168,7 @@ para_sizelimit_end=8 # end size limit (inclusive)
 para_step=1 # step size
 
 para_arrSize=15 # size of the sbatch array
-para_hrs=100 # number of hours for each sbatch job
+para_hrs=70 # number of hours for each sbatch job
 para_core=1 # number of cores for each sbatch job
 para_mem=2 # memory for each sbatch job (GB)
 para_repeatNum=5 # number of repeats of each sbatch job
