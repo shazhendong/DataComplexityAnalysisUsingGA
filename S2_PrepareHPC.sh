@@ -32,14 +32,14 @@ rm -r $dir_res/GWAS/res_*.sh
 
 echo "Process GWAS runs"
 
-para_genNum=100 # number of generations
+para_genNum=50 # number of generations
 para_popSize=1000 # size of the population
 para_mutRate=0.2 # mutation rate
 para_crossRate=0.8 # crossover rate
 para_tournSize=6 # tournament size
-para_sizelimit_begin=10 # begin size limit
-para_sizelimit_end=200 # end size limit (inclusive)
-para_step=10 # step size
+para_sizelimit_begin=1 # begin size limit
+para_sizelimit_end=20 # end size limit (inclusive)
+para_step=1 # step size
 
 para_arrSize=15 # size of the sbatch array
 para_hrs=100 # number of hours for each sbatch job
@@ -92,14 +92,14 @@ do
     rm -r $folder/res_*.sh
 done
 
-para_genNum=100 # number of generations
+para_genNum=50 # number of generations
 para_popSize=1000 # size of the population
 para_mutRate=0.2 # mutation rate
 para_crossRate=0.8 # crossover rate
 para_tournSize=6 # tournament size
-para_sizelimit_begin=5 # begin size limit
-para_sizelimit_end=100 # end size limit (inclusive)
-para_step=5 # step size
+para_sizelimit_begin=1 # begin size limit
+para_sizelimit_end=20 # end size limit (inclusive)
+para_step=1 # step size
 
 para_arrSize=15 # size of the sbatch array
 para_hrs=100 # number of hours for each sbatch job
@@ -158,7 +158,7 @@ do
     rm -r $folder/res_*.sh
 done
 
-para_genNum=100 # number of generations
+para_genNum=50 # number of generations
 para_popSize=100 # size of the population
 para_mutRate=0.2 # mutation rate
 para_crossRate=0.8 # crossover rate
