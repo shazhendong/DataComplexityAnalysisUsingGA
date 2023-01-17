@@ -1,6 +1,8 @@
 echo "Processing GWAS folder"
 
-cd res/GWAS
+target_folder="res"
+
+cd ${target_folder}/GWAS
 for file in *.sh
 do
     echo "Submitting job $file"
@@ -10,7 +12,7 @@ cd ..
 cd ..
 
 # iterate over folders under /res folder
-for folder in res/GAMETES/*
+for folder in ${target_folder}/GAMETES/*
 do
     # iterate over files under each folder
     echo "Processing folder $folder"
@@ -26,7 +28,7 @@ do
     cd ..
 done
 
-for folder in res/GEO_Datasets/*
+for folder in ${target_folder}/GEO_Datasets/*
 do
     # iterate over files under each folder
     echo "Processing folder $folder"
