@@ -1,7 +1,8 @@
-# this python file validate the predictive performance of feature selection results of GAMETES and GEO datasets.
+# this python file validate the predictive performance of feature selection results of plink, GAMETES and GEO datasets.
 # note this file works for binary classification problems only.
 # author: Zhendong Sha @2021-01-22
 # parameters:
+# -p: plink dataset (if -p is specified, -t and -v is individual id)
 # -t: training dataset
 # -v: validation dataset
 # -r: randon seed
@@ -19,13 +20,18 @@ from sklearn.model_selection import train_test_split
 # read parameters
 def read_parameters():
     # read parameters
+    # if contain -p read plink dataset file name
+    if '-p' in sys.argv:
+        plink_dataset_file = sys.argv[sys.argv.index('-p') + 1]
+    else:
+        plink_dataset_file = None
     training_dataset = sys.argv[sys.argv.index('-t') + 1]
     validation_dataset = sys.argv[sys.argv.index('-v') + 1]
     random_seed = int(sys.argv[sys.argv.index('-r') + 1])
     feature_selection_results = sys.argv[sys.argv.index('-f') + 1]
     output_file = sys.argv[sys.argv.index('-o') + 1]
     model_name = sys.argv[sys.argv.index('-m') + 1]
-    return training_dataset, validation_dataset, random_seed, feature_selection_results, output_file, model_name
+    return training_dataset, validation_dataset, random_seed, feature_selection_results, output_file, model_name, plink_dataset_file
 
 def validate_feature_selection(feature_selection, X_train, y_train, X_test, y_test, X_validation, y_validation, model_name):
     # get feature selection
@@ -80,26 +86,55 @@ def labelTransform(y):
 
 if __name__ == '__main__':
     # read parameters
-    training_dataset, validation_dataset, random_seed, feature_selection_results, output_file, model_name = read_parameters()
+    training_dataset, validation_dataset, random_seed, feature_selection_results, output_file, model_name, plink_dataset_file = read_parameters()
 
-    # read training dataset
-    df_training = pd.read_csv(training_dataset, sep='\t')
-    # get X and y
-    X_training = df_training.iloc[:, :-1]
-    y_training = df_training.iloc[:, -1]
-    # transform y to 0 and 1
-    y_training = labelTransform(y_training)
+    # if plink dataset is specified, read plink dataset
+    if plink_dataset_file is not None:
+        # read plink dataset using pandas_plink
+        from pandas_plink import read_plink
+        (bim, fam, bed) = read_plink(plink_dataset_file,verbose=False)
+        dataset_X = bed.compute().T.astype('int')
+        dataset_y = fam['trait'].values.astype('int')
 
-    # split training dataset into training and test stratified by y
-    X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, test_size=0.2, random_state=random_seed, stratify=y_training)
+        # read training and validation ids from training dataset
+        df_training_ids = pd.read_csv(training_dataset, sep='\t')
+        training_ids = df_training_ids.iloc[:, 1] # get iid
+        df_validation_ids = pd.read_csv(validation_dataset, sep='\t')
+        validation_ids = df_validation_ids.iloc[:, 1] # get iid
 
-    # read validation dataset
-    df_validation = pd.read_csv(validation_dataset, sep='\t')
-    # get X and y
-    X_validation = df_validation.iloc[:, :-1]
-    y_validation = df_validation.iloc[:, -1]
-    # transform y to 0 and 1
-    y_validation = labelTransform(y_validation)
+        # get ids of training and validation ids from plink dataset
+        training_ids_index = np.where(np.isin(fam['iid'].values, training_ids))[0]
+        validation_ids_index = np.where(np.isin(fam['iid'].values, validation_ids))[0]
+
+        # prepare training dataset
+        X_training = dataset_X[training_ids_index, :]
+        y_training = dataset_y[training_ids_index]
+        # split training dataset into training and test stratified by y
+        X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, test_size=0.2, random_state=random_seed, stratify=y_training)
+        # prepare validation dataset
+        X_validation = dataset_X[validation_ids_index, :]
+        y_validation = dataset_y[validation_ids_index]
+
+    else:
+
+        # read training dataset
+        df_training = pd.read_csv(training_dataset, sep='\t')
+        # get X and y
+        X_training = df_training.iloc[:, :-1]
+        y_training = df_training.iloc[:, -1]
+        # transform y to 0 and 1
+        y_training = labelTransform(y_training)
+
+        # split training dataset into training and test stratified by y
+        X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, test_size=0.2, random_state=random_seed, stratify=y_training)
+
+        # read validation dataset
+        df_validation = pd.read_csv(validation_dataset, sep='\t')
+        # get X and y
+        X_validation = df_validation.iloc[:, :-1]
+        y_validation = df_validation.iloc[:, -1]
+        # transform y to 0 and 1
+        y_validation = labelTransform(y_validation)
 
     # read feature selection results
     df_feature_selection = pd.read_csv(feature_selection_results, sep=',')
