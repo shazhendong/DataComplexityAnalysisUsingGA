@@ -48,7 +48,7 @@ def validate_feature_selection(feature_selection, X_train, y_train, X_test, y_te
         model = DecisionTreeClassifier(random_state=0)
     elif model_name == 'lr':
         from sklearn.linear_model import LogisticRegression
-        model = LogisticRegression(random_state=0)
+        model = LogisticRegression(random_state=0, max_iter=10000)
     elif model_name == 'mlp':
         from sklearn.neural_network import MLPClassifier
         model = MLPClassifier(random_state=0)
