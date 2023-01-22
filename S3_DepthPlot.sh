@@ -1,1 +1,0 @@
-# The pipeline specified in this script is used to generate the depth plot and the linear and non-linear depth.
