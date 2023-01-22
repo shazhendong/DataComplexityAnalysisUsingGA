@@ -93,8 +93,8 @@ if __name__ == '__main__':
         # read plink dataset using pandas_plink
         from pandas_plink import read_plink
         (bim, fam, bed) = read_plink(plink_dataset_file,verbose=False)
-        dataset_X = bed.compute().T.astype('int')
-        dataset_y = fam['trait'].values.astype('int')
+        dataset_X = bed.compute().T.astype('int8')
+        dataset_y = fam['trait'].values.astype('int8')
 
         # read training and validation ids from training dataset
         df_training_ids = pd.read_csv(training_dataset, sep='\t')
@@ -108,11 +108,15 @@ if __name__ == '__main__':
 
         # prepare training dataset
         X_training = dataset_X[training_ids_index, :]
+        # transform X_training to dataframe
+        X_training = pd.DataFrame(X_training)
         y_training = dataset_y[training_ids_index]
         # split training dataset into training and test stratified by y
         X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, test_size=0.2, random_state=random_seed, stratify=y_training)
         # prepare validation dataset
         X_validation = dataset_X[validation_ids_index, :]
+        # transform X_validation to dataframe
+        X_validation = pd.DataFrame(X_validation)
         y_validation = dataset_y[validation_ids_index]
 
     else:
@@ -150,8 +154,8 @@ if __name__ == '__main__':
     input_list = [(feature_selection, X_train, y_train, X_test, y_test, X_validation, y_validation, model_name) for feature_selection in arr_feature_selections]
     # get the predictive performance of each feature selection result
     from multiprocessing import Pool
-    # use all available cores
-    pool = Pool()
+    # use eight cores
+    pool = Pool(8)
     arr_results = pool.starmap(validate_feature_selection, input_list)
     # close pool
     pool.close()
