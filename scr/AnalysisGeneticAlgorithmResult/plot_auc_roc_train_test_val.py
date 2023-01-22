@@ -70,6 +70,9 @@ def validate_feature_selection(feature_selection, X_train, y_train, X_test, y_te
 
 def labelTransform(y):
     # transform y to 0 and 1. if y is 'normal', then y = 0; else y = 1
+    # return y if y is already 0 and 1
+    if np.array_equal(np.unique(y), np.array([0, 1])):
+        return y
     y = np.array(y)
     y[y == 'normal'] = 0
     y[y != 0] = 1
