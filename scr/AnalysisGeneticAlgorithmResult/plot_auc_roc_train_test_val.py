@@ -1,4 +1,5 @@
 # this python file validate the predictive performance of feature selection results of GAMETES and GEO datasets.
+# note this file works for binary classification problems only.
 # author: Zhendong Sha @2021-01-22
 # parameters:
 # -t: training dataset
@@ -67,6 +68,13 @@ def validate_feature_selection(feature_selection, X_train, y_train, X_test, y_te
     auc_roc_validation = roc_auc_score(y_validation, y_pred_validation)
     return auc_roc_train, auc_roc_test, auc_roc_validation
 
+def labelTransform(y):
+    # transform y to 0 and 1. if y is 'normal', then y = 0; else y = 1
+    y = np.array(y)
+    y[y == 'normal'] = 0
+    y[y != 0] = 1
+    return y.astype('int')
+
 if __name__ == '__main__':
     # read parameters
     training_dataset, validation_dataset, random_seed, feature_selection_results, output_file, model_name = read_parameters()
@@ -76,6 +84,9 @@ if __name__ == '__main__':
     # get X and y
     X_training = df_training.iloc[:, :-1]
     y_training = df_training.iloc[:, -1]
+    # transform y to 0 and 1
+    y_training = labelTransform(y_training)
+
     # split training dataset into training and test stratified by y
     X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, test_size=0.2, random_state=random_seed, stratify=y_training)
 
@@ -84,6 +95,8 @@ if __name__ == '__main__':
     # get X and y
     X_validation = df_validation.iloc[:, :-1]
     y_validation = df_validation.iloc[:, -1]
+    # transform y to 0 and 1
+    y_validation = labelTransform(y_validation)
 
     # read feature selection results
     df_feature_selection = pd.read_csv(feature_selection_results, sep=',')
