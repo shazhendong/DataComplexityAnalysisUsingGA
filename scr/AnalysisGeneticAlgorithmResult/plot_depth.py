@@ -33,7 +33,7 @@ auc_df['type'] = auc_df['type'].str.capitalize()
 # set color palette as blend:#7AB,#EDA
 #sns.set_palette(sns.color_palette(['#7AB','#EDA']))
 
-plt = sns.pointplot(x='size_lim', y='auc_roc', hue='type', data=auc_df, ci=50)
+plt = sns.pointplot(x='size_lim', y='auc_roc', hue='type', data=auc_df, ci=95, dodge=True)
 plt.set(xlabel='Size limit', ylabel='AUC-ROC')
 # set the position of the legend to bottom right
 
