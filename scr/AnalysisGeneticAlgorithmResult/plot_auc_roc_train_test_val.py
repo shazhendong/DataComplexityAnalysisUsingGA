@@ -52,10 +52,10 @@ def validate_feature_selection(feature_selection, X_train, y_train, X_test, y_te
         model = KNeighborsClassifier(n_neighbors=5)
     elif model_name == 'dt':
         from sklearn.tree import DecisionTreeClassifier
-        model = DecisionTreeClassifier(random_state=0)
+        model = DecisionTreeClassifier(random_state=0, class_weight='balanced',min_samples_split=0.05)
     elif model_name == 'lr':
         from sklearn.linear_model import LogisticRegression
-        model = LogisticRegression(random_state=0, max_iter=10000)
+        model = LogisticRegression(random_state=0, max_iter=10000,class_weight='balanced')
     elif model_name == 'mlp':
         from sklearn.neural_network import MLPClassifier
         model = MLPClassifier(random_state=0)
