@@ -53,7 +53,7 @@ def eval(individual, size, dataset_X, dataset_y):
     for train_index, test_index in kf.split(X,y):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
-        clf = LogisticRegression(solver="lbfgs", random_state=0,max_iter=10000).fit(X_train, y_train)
+        clf = LogisticRegression(solver="lbfgs", random_state=0,max_iter=10000,class_weight='balanced').fit(X_train, y_train)
         arr_auc.append(roc_auc_score(y_test, clf.predict_proba(X_test)[:, 1]))
     return numpy.mean(arr_auc),
 

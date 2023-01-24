@@ -22,6 +22,7 @@ from deap import base
 from deap import creator
 from deap import tools
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedKFold
 import pandas as pd
@@ -49,13 +50,14 @@ def eval(individual, size, dataset_X, dataset_y):
     foldsNum = 5
     kf = StratifiedKFold(n_splits=foldsNum, shuffle=True)
 
-    arr_auc = []
+    fitness = []
     for train_index, test_index in kf.split(X,y):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
-        clf = LogisticRegression(solver="lbfgs", random_state=0,max_iter=10000).fit(X_train, y_train)
-        arr_auc.append(roc_auc_score(y_test, clf.predict_proba(X_test)[:, 1]))
-    return numpy.mean(arr_auc),
+        clf_lr = LogisticRegression(solver="lbfgs", random_state=0,max_iter=10000,class_weight='balanced').fit(X_train, y_train)
+        clf_dt = DecisionTreeClassifier(min_samples_split=0.05,class_weight='balanced').fit(X_train,y_train)
+        fitness.append(roc_auc_score(y_test, clf_dt.predict_proba(X_test)[:,1]) - roc_auc_score(y_test, clf_lr.predict_proba(X_test)[:, 1]))
+    return numpy.mean(fitness),
 
 
 
