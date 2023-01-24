@@ -9,6 +9,7 @@
 # -f: feature selection results
 # -o: output file name
 # -m: model name
+# -pct: percentage of test dataset (default 0.25)
 
 import sys
 import pandas as pd
@@ -31,7 +32,11 @@ def read_parameters():
     feature_selection_results = sys.argv[sys.argv.index('-f') + 1]
     output_file = sys.argv[sys.argv.index('-o') + 1]
     model_name = sys.argv[sys.argv.index('-m') + 1]
-    return training_dataset, validation_dataset, random_seed, feature_selection_results, output_file, model_name, plink_dataset_file
+    if '-pct' in sys.argv:
+        pct = float(sys.argv[sys.argv.index('-pct') + 1])
+    else:
+        pct = 0.25
+    return training_dataset, validation_dataset, random_seed, feature_selection_results, output_file, model_name, plink_dataset_file, pct
 
 def validate_feature_selection(feature_selection, X_train, y_train, X_test, y_test, X_validation, y_validation, model_name):
     # get feature selection
@@ -86,7 +91,7 @@ def labelTransform(y):
 
 if __name__ == '__main__':
     # read parameters
-    training_dataset, validation_dataset, random_seed, feature_selection_results, output_file, model_name, plink_dataset_file = read_parameters()
+    training_dataset, validation_dataset, random_seed, feature_selection_results, output_file, model_name, plink_dataset_file, test_pct = read_parameters()
 
     # if plink dataset is specified, read plink dataset
     if plink_dataset_file is not None:
@@ -112,7 +117,7 @@ if __name__ == '__main__':
         X_training = pd.DataFrame(X_training)
         y_training = dataset_y[training_ids_index]
         # split training dataset into training and test stratified by y
-        X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, test_size=0.2, random_state=random_seed, stratify=y_training)
+        X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, test_size=test_pct, random_state=random_seed, stratify=y_training)
         # prepare validation dataset
         X_validation = dataset_X[validation_ids_index, :]
         # transform X_validation to dataframe
@@ -130,7 +135,7 @@ if __name__ == '__main__':
         y_training = labelTransform(y_training)
 
         # split training dataset into training and test stratified by y
-        X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, test_size=0.2, random_state=random_seed, stratify=y_training)
+        X_train, X_test, y_train, y_test = train_test_split(X_training, y_training, test_size=test_pct, random_state=random_seed, stratify=y_training)
 
         # read validation dataset
         df_validation = pd.read_csv(validation_dataset, sep='\t')

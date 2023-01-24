@@ -50,7 +50,7 @@ cat ${header}*\_summary.csv >> res_simpleGAplus${filter}_summary.csv
 
 # step 2: compute training testing validation auc-rocs
 cd ..
-python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -p AllSamples_Imputation -t training_set_id_randomSeed_25.txt -v validation_set_id_randomSeed_25.txt -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model
+python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -p AllSamples_Imputation -t training_set_id_randomSeed_25.txt -v validation_set_id_randomSeed_25.txt -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model -pct 0.25
 
 
 # process results of DT fitness
@@ -77,7 +77,7 @@ cat ${header}*\_summary.csv >> res_simpleGAplus${filter}_summary.csv
 
 # step 2: compute training testing validation auc-rocs
 cd ..
-python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -p AllSamples_Imputation -t training_set_id_randomSeed_25.txt -v validation_set_id_randomSeed_25.txt -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model
+python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -p AllSamples_Imputation -t training_set_id_randomSeed_25.txt -v validation_set_id_randomSeed_25.txt -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model -pct 0.25
 
 cd $home
 
@@ -124,7 +124,7 @@ do
 
     # step 2: compute training testing validation auc-rocs
     cd ..
-    python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -t train.tsv -v validation.tsv -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model
+    python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -t train.tsv -v validation.tsv -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model -pct 0.25
     
 
     # process results of DT fitness
@@ -151,7 +151,7 @@ do
     
     # step 2: compute training testing validation auc-rocs
     cd ..
-    python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -t train.tsv -v validation.tsv -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model
+    python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -t train.tsv -v validation.tsv -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model -pct 0.25
 
     cd $home
     # enter to contiue
@@ -199,7 +199,7 @@ do
 
     # step 2: compute training testing validation auc-rocs
     cd ..
-    python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -t train.tsv -v validation.tsv -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model
+    python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -t train.tsv -v validation.tsv -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model -pct 0.25
     
 
     # process results of DT fitness
@@ -226,7 +226,7 @@ do
     
     # step 2: compute training testing validation auc-rocs
     cd ..
-    python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -t train.tsv -v validation.tsv -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model
+    python $home/$scr/AnalysisGeneticAlgorithmResult/plot_auc_roc_train_test_val.py -t train.tsv -v validation.tsv -r $random_seed -f $filter_dir/res_simpleGAplus${filter}_summary.csv -o $folder_res/res_simpleGAplus${filter}_summary_auc.csv -m $model -pct 0.25
 
     cd $home
     # enter to contiue
