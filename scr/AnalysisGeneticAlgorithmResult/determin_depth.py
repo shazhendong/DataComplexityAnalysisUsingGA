@@ -42,7 +42,6 @@ auc_df_90_validation_size_lim = auc_df_90_validation.first_valid_index()
 
 # get the value of the smallest size_lim for each column of auc_df that reaches 95% of the max
 auc_df_95 = auc_df[auc_df >= auc_df_max_95]
-print(auc_df_95)
 # split auc_df_95 into three dataframes for train, test, and validation AUCs
 auc_df_95_train = auc_df_95['auc_roc_train']
 auc_df_95_test = auc_df_95['auc_roc_test']
