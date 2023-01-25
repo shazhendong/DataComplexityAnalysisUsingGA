@@ -69,10 +69,10 @@ def validate_feature_selection(feature_selection, X_train, y_train, X_test, y_te
         exit(1)
     # fit model
     model.fit(X_train, y_train)
-    # predict y
-    y_pred_train = model.predict(X_train)
-    y_pred_test = model.predict(X_test)
-    y_pred_validation = model.predict(X_validation)
+    # get probablistic prediction of train, test and validation
+    y_pred_train = model.predict_proba(X_train)[:, 1]
+    y_pred_test = model.predict_proba(X_test)[:, 1]
+    y_pred_validation = model.predict_proba(X_validation)[:, 1]
     # get auc_roc
     auc_roc_train = roc_auc_score(y_train, y_pred_train)
     auc_roc_test = roc_auc_score(y_test, y_pred_test)
