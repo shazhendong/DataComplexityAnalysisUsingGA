@@ -12,20 +12,20 @@ folder_name=SimulationStudy
 # HPC parameters
 para_env='source $HOME/.local/ENV/bin/activate'
 
-para_genNum=50 # number of generations
-para_popSize=20 # size of the population
+para_genNum=30 # number of generations
+para_popSize=100 # size of the population
 para_mutRate=0.2 # mutation rate
 para_crossRate=0.8 # crossover rate
 para_tournSize=6 # tournament size
 para_sizelimit_begin=1 # begin size limit
-para_sizelimit_end=100 # end size limit (inclusive)
-para_step=2 # step size
+para_sizelimit_end=10 # end size limit (inclusive)
+para_step=1 # step size
 
-para_arrSize=2 # size of the sbatch array
+para_arrSize=3 # size of the sbatch array
 para_hrs=24 # number of hours for each sbatch job
 para_core=1 # number of cores for each sbatch job
-para_mem=2 # memory for each sbatch job (GB)
-para_repeatNum=30 # number of repeats of each sbatch job
+para_mem=1028 # memory for each sbatch job (GB)
+para_repeatNum=25 # number of repeats of each sbatch job
 
 #### process GAMETES datasets ####
 
@@ -59,7 +59,7 @@ do
         echo "#SBATCH --job-name=${data}_${filter}_$c" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "#SBATCH --time=$para_hrs:00:00" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "#SBATCH -c $para_core" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
-        echo "#SBATCH --mem ${para_mem}g" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
+        echo "#SBATCH --mem ${para_mem}M" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "$para_env" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
@@ -76,7 +76,7 @@ do
         echo "#SBATCH --job-name=${data}_${filter}_$c" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "#SBATCH --time=$para_hrs:00:00" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "#SBATCH -c $para_core" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
-        echo "#SBATCH --mem ${para_mem}g" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
+        echo "#SBATCH --mem ${para_mem}M" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "$para_env" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
@@ -92,7 +92,7 @@ do
         echo "#SBATCH --job-name=${data}_${filter}_$c" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "#SBATCH --time=$para_hrs:00:00" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "#SBATCH -c $para_core" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
-        echo "#SBATCH --mem ${para_mem}g" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
+        echo "#SBATCH --mem ${para_mem}M" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "$para_env" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
         echo "" >> $folder/res_simpleGAplus"$filter"_sizelim_"$c".sh
