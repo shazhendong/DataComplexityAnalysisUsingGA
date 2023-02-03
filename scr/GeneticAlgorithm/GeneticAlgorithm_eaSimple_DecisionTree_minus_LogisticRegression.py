@@ -154,7 +154,7 @@ if __name__ == "__main__":
         dataset_y = dataset[dataset.columns[-1]].values
     elif bfile != None:
         (bim, fam, bed) = read_plink(bfile,verbose=False)
-        dataset_X = bed.compute().T
+        dataset_X = bed.compute().T.astype('int8')
         # imputation
         # imputer = SimpleImputer(missing_values=numpy.nan, strategy='most_frequent')
         # imputer = imputer.fit(dataset_X)
