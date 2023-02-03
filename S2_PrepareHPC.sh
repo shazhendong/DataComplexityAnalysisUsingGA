@@ -44,7 +44,7 @@ para_step=2 # step size
 para_arrSize=10 # size of the sbatch array
 para_hrs=110 # number of hours for each sbatch job
 para_core=1 # number of cores for each sbatch job
-para_mem=4 # memory for each sbatch job (GB)
+para_mem=8 # memory for each sbatch job (GB)
 para_repeatNum=6 # number of repeats of each sbatch job
 
 # produce ga runs with LR as the fitness evaluation
