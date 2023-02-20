@@ -1,12 +1,12 @@
 # The pipeline specified in this script is used to generate the results for generating linear and non-linear depth.
 
 #### Parameters ####
-targetFold_root=res_1-100\(5\)
+targetFold_root=res_1-100\(2\)
 scr=scr
 home=$(pwd)
 size_lim_begin=1
 size_lim_end=100
-size_lim_step=5
+size_lim_step=2
 random_seed=25
 folder_res=PredictivePerformance
 
@@ -83,8 +83,8 @@ cd $home
 echo "Processing GAMETES"
 
 size_lim_begin=1
-size_lim_end=8
-size_lim_step=1
+size_lim_end=100
+size_lim_step=2
 
 targetFold=$targetFold_root/GAMETES
 
@@ -159,7 +159,7 @@ echo "Processing GEO_Datasets"
 
 size_lim_begin=1
 size_lim_end=100
-size_lim_step=5
+size_lim_step=2
 
 targetFold=$targetFold_root/GEO_Datasets
 
