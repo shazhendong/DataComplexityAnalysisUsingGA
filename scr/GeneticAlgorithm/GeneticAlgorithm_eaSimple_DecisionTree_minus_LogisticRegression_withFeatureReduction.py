@@ -27,7 +27,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedKFold
 import pandas as pd
 from pandas_plink import read_plink
-# from sklearn.impute import SimpleImputer
+#from sklearn.impute import SimpleImputer
 
 
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))
@@ -45,18 +45,26 @@ def eval(individual, size, dataset_X, dataset_y):
     X,y = dataset_X, dataset_y
     if sum(list(individual))==0:
         return (0,)
-    X = mytoolbox.selectFeatures(X, list(individual))
+    X, feature_index = mytoolbox.selectFeatures_withFeatureSel(X, list(individual))
     
     foldsNum = 5
     kf = StratifiedKFold(n_splits=foldsNum, shuffle=True)
 
+    arr_auc = []
+    arr_imp = numpy.zeros(len(feature_index))
+
     fitness = []
+
     for train_index, test_index in kf.split(X,y):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
+        clf=DecisionTreeClassifier(min_samples_split=0.05,class_weight='balanced').fit(X_train,y_train)
+        arr_auc.append(roc_auc_score(y_test, clf.predict_proba(X_test)[:,1]))
+        arr_imp = arr_imp + numpy.array(clf.tree_.compute_feature_importances(normalize=True))/foldsNum
         clf_lr = LogisticRegression(solver="lbfgs", random_state=0,max_iter=10000,class_weight='balanced').fit(X_train, y_train)
-        clf_dt = DecisionTreeClassifier(min_samples_split=0.05,class_weight='balanced').fit(X_train,y_train)
-        fitness.append(roc_auc_score(y_test, clf_dt.predict_proba(X_test)[:,1]) - roc_auc_score(y_test, clf_lr.predict_proba(X_test)[:, 1]))
+        fitness.append(roc_auc_score(y_test, clf.predict_proba(X_test)[:,1]) - roc_auc_score(y_test, clf_lr.predict_proba(X_test)[:, 1]))
+    fs_index = list(numpy.where(arr_imp > 0)[0])
+    individual = mytoolbox.Select(individual,fs_index,feature_index)
     return numpy.mean(fitness),
 
 
@@ -111,9 +119,6 @@ if __name__ == "__main__":
     num_repeat = 10
     size = 6
     file = None
-    plsr_n_comp = 6
-    mu = 50
-    ld = 20
     bfile = None
     
 
@@ -142,7 +147,7 @@ if __name__ == "__main__":
             file = arg
         elif opt == '-b': # -b represents bfile
             bfile = arg
-    
+
     # read file 
     dataset_X = None
     dataset_y = None
@@ -156,9 +161,9 @@ if __name__ == "__main__":
         (bim, fam, bed) = read_plink(bfile,verbose=False)
         dataset_X = bed.compute().T.astype('int8')
         # imputation
-        # imputer = SimpleImputer(missing_values=numpy.nan, strategy='most_frequent')
-        # imputer = imputer.fit(dataset_X)
-        # dataset_X = imputer.transform(dataset_X)
+        #imputer = SimpleImputer(missing_values=numpy.nan, strategy='most_frequent')
+        #imputer = imputer.fit(dataset_X)
+        #dataset_X = imputer.transform(dataset_X)
         dataset_y = fam['trait']
     else:
         # default

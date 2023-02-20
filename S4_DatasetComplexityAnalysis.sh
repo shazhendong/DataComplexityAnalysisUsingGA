@@ -1,7 +1,7 @@
 # This sh file generates determin the depth for each dataset based on the result of S3-1_DepthPlot.sh. The result is saved in the folder "PredictivePerformance"
 
 # Parameters
-targetFold_root=res_1-100\(5\)
+targetFold_root=res_1-100\(2\)
 scr=scr/AnalysisGeneticAlgorithmResult
 home=$(pwd)
 
