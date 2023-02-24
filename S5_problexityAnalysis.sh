@@ -28,7 +28,7 @@ do
 done
 
 # analyze GEO datasets
-data_geo=$data/GEO\ datasets
+data_geo=$data/GEOdatasets
 
 for file in $data_geo/*.csv
 do
