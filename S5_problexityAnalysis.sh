@@ -15,10 +15,20 @@ mkdir -p $res
 
 #### Main ####
 
+# analyze GAMETES datasets
+data_gametes=$data/GAMETES
 
+# run complexity analysis
+for file in $data_gametes/*.tsv
+do
+    echo $file
+    # get file name
+    name=$(basename $file)
+    python $scr/problexityAnalysis.py -i $file -o $res/$name.csv -f tsv -p target
+done
 
 # analyze GEO datasets
-data_geo=$data/GEOdatasets
+data_geo=$data/GEO\ datasets
 
 for file in $data_geo/*.csv
 do
