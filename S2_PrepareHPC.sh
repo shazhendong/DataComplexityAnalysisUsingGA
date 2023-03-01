@@ -33,7 +33,7 @@ rm -r $dir_res/GWAS/res_*.sh
 echo "Process GWAS runs"
 
 para_genNum=50 # number of generations
-para_popSize=2000 # size of the population
+para_popSize=500 # size of the population
 para_mutRate=0.2 # mutation rate
 para_crossRate=0.8 # crossover rate
 para_tournSize=6 # tournament size
@@ -164,14 +164,14 @@ para_mutRate=0.2 # mutation rate
 para_crossRate=0.8 # crossover rate
 para_tournSize=6 # tournament size
 para_sizelimit_begin=1 # begin size limit
-para_sizelimit_end=20 # end size limit (inclusive)
+para_sizelimit_end=10 # end size limit (inclusive)
 para_step=1 # step size
 
-para_arrSize=20 # size of the sbatch array
-para_hrs=48 # number of hours for each sbatch job
+para_arrSize=6 # size of the sbatch array
+para_hrs=24 # number of hours for each sbatch job
 para_core=1 # number of cores for each sbatch job
 para_mem=4 # memory for each sbatch job (GB)
-para_repeatNum=3 # number of repeats of each sbatch job
+para_repeatNum=10 # number of repeats of each sbatch job
 
 # iterate through all GEO datasets
 for folder in $dir_res/GAMETES/*
