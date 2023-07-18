@@ -10,6 +10,31 @@ Before you can run the experiments, you need to set up the project. Follow the s
 1. Navigate to the `data/GEO\ datasets` directory.
 2. Run the `unzip_csv.sh` script to unzip the GEO datasets. This will extract all the necessary data files required for the experiments.
 
+## Required Python Packages
+
+The following Python packages are required to run the scripts in this project:
+
+- deap
+- kneed
+- matplotlib
+- numpy
+- pandas
+- pandas_plink
+- problexity
+- random
+- seaborn
+- sklearn
+
+## HPC Environment Setup
+
+The "GeneticAlgorithm_eaSimple_LogisticRegression.py" and "GeneticAlgorithm_eaSimple_DecisionTree_withFeatureReduction.py" scripts are intended to be run on a High Performance Computing (HPC) server. To execute these scripts, the following Python packages are required:
+
+- deap
+- numpy
+- pandas
+- pandas_plink
+- sklearn
+
 ## Running the Experiments
 
 All experiments in this study can be replicated using the shell files listed in the home directory. Here is a brief overview of what each shell file does:
