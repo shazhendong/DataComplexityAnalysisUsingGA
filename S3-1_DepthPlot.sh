@@ -1,7 +1,7 @@
 # The pipeline specified in this script is used to generate the results for generating linear and non-linear depth.
 
 #### Parameters ####
-targetFold_root=res_1-100\(2\)
+targetFold_root=res_1-100\(2\) # folder containing results
 scr=scr
 home=$(pwd)
 size_lim_begin=1

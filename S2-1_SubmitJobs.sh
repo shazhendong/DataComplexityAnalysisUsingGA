@@ -1,3 +1,4 @@
+# Job submission to HPC cluster.
 echo "Processing GWAS folder"
 
 target_folder="res"
