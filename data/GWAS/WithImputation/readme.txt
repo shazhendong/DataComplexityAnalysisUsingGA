@@ -1,0 +1,1 @@
+The plink dataset will not be made public on GitHub for privacy reasons.

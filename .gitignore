@@ -1,4 +1,9 @@
-data*/
 res/
 res*/
 ._*
+data/GEOdatasets*
+data/SyntheticDatasets*
+data/GEO\ datasets/*.csv
+data/GWAS/WithImputation/AllSamples_Imputation.bed
+data/GWAS/WithImputation/AllSamples_Imputation.bim
+data/GWAS/WithImputation/AllSamples_Imputation.fam
